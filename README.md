@@ -1,6 +1,10 @@
 # React Wizard Demo
 
-A React application built with Vite and TypeScript.
+A React application built with Vite and TypeScript, featuring a wizard component with various examples.
+
+## Live Demo
+
+🌐 **[View Live Demo](https://medanmilos1831.github.io/react-wizard-demo/)**
 
 ## Getting Started
 
@@ -22,6 +26,20 @@ npm run dev
 npm run build
 ```
 
+## Deployment
+
+This project is configured for automatic deployment to GitHub Pages:
+
+### Manual Deployment
+
+```bash
+npm run deploy
+```
+
+### Automatic Deployment
+
+The project uses GitHub Actions for automatic deployment. Every push to the `main` branch will automatically build and deploy the application to GitHub Pages.
+
 ## Scripts
 
 - `npm run dev` - Start development server
@@ -29,3 +47,9 @@ npm run build
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
 - `npm run deploy` - Deploy to GitHub Pages
+
+## Configuration
+
+- **Base URL**: `/react-wizard-demo/` (configured in `vite.config.ts`)
+- **Build Output**: `docs/` directory
+- **Homepage**: Set to GitHub Pages URL in `package.json`
