@@ -225,7 +225,16 @@ const WizardNavigation = () => {
         const isActive = step === stepName;
         return (
           <button
-            onClick={() => goToStep(step)}
+            onClick={() =>
+              goToStep(
+                step,
+                stepName === "stepOne"
+                  ? {
+                      actionType: "validate",
+                    }
+                  : undefined
+              )
+            }
             key={step}
             style={{
               background: isActive
