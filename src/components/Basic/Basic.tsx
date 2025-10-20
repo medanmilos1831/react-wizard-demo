@@ -1,6 +1,6 @@
 import {
   createWizardClient,
-  useStep,
+  useWizardStep,
   useWizardCommands,
   WizardClientProvider,
 } from "react-wizzard";
@@ -76,7 +76,7 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   return <div>{children(stepName)}</div>;
 };
 const WizardControls = () => {
@@ -149,7 +149,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps, stepName } = useStep();
+  const { steps, stepName } = useWizardStep();
   const { goToStep } = useWizardCommands();
   return (
     <div
@@ -210,7 +210,7 @@ const WizardNavigation = () => {
 const Basic = () => {
   const codeExample = `import {
   createWizardClient,
-  useStep,
+  useWizardStep,
   useWizardCommands,
   WizardClientProvider,
 } from "react-wizzard";
@@ -239,7 +239,7 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   return <div>{children(stepName)}</div>;
 };
 
@@ -254,7 +254,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps } = useStep();
+  const { steps } = useWizardStep();
   const { goToStep } = useWizardCommands();
   return (
     <div>

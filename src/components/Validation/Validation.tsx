@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import { useState } from "react";
 import {
   createWizardClient,
-  useStep,
+  useWizardStep,
   useWizardCommands,
   WizardClientProvider,
 } from "react-wizzard";
@@ -127,11 +127,11 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   return <div>{children(stepName)}</div>;
 };
 const WizardControls = () => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   const { next, previous } = useWizardCommands();
   return (
     <div
@@ -209,7 +209,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps, stepName } = useStep();
+  const { steps, stepName } = useWizardStep();
   const { goToStep } = useWizardCommands();
   return (
     <div
@@ -281,7 +281,7 @@ const Validation = () => {
 import { useState } from "react";
 import {
   createWizardClient,
-  useStep,
+  useWizardStep,
   useWizardCommands,
   WizardClientProvider,
 } from "react-wizzard";
@@ -344,12 +344,12 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   return <div>{children(stepName)}</div>;
 };
 
 const WizardControls = () => {
-  const { stepName } = useStep();
+  const { stepName } = useWizardStep();
   const { next, previous } = useWizardCommands();
   return (
     <div>
@@ -372,7 +372,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps } = useStep();
+  const { steps } = useWizardStep();
   const { goToStep } = useWizardCommands();
   return (
     <div>

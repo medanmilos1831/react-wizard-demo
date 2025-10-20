@@ -24,7 +24,7 @@
         "react-dom": "^18.3.1",
         "react-syntax-highlighter": "^15.6.6",
         "react-visibility-state": "^2.0.2",
-        "react-wizzard": "^3.0.1"
+        "react-wizzard": "^3.0.3"
     },
     "devDependencies": {
         "@eslint/js": "^9.33.0",
