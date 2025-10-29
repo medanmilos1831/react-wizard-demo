@@ -1,9 +1,8 @@
 import { Card } from "antd";
 import { Basic } from "./Basic/Basic";
-import { DynamicSteps } from "./DynamicSteps/DynamicSteps";
-import { RenderSuccess } from "./RenderSuccess/RenderSuccess";
 import { Validation } from "./Validation/Validation";
 import { Reset } from "./Reset/Reset";
+import { DynamicSteps } from "./DynamicSteps/DynamicSteps";
 
 export const WizardSection = () => {
   return (
@@ -44,19 +43,6 @@ export const WizardSection = () => {
         >
           <DynamicSteps />
         </Card>
-        <Card
-          title="Render Success"
-          style={{ flex: "1", minWidth: "400px" }}
-          headStyle={{
-            backgroundColor: "#f0f2f5",
-            fontWeight: "bold",
-            fontSize: "18px",
-          }}
-        >
-          <RenderSuccess />
-        </Card>
-      </div>
-      <div style={{ display: "flex", gap: "40px", flexWrap: "wrap" }}>
         <Card
           title="Validation Wizard"
           style={{ flex: "1", minWidth: "400px" }}

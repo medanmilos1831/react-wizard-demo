@@ -1,13 +1,9 @@
 import { Modal } from "antd";
 import { useState } from "react";
-import {
-  createWizardClient,
-  useWizardStep,
-  useWizardCommands,
-  WizardClientProvider,
-} from "react-wizzard";
-import { Wizard } from "react-wizzard";
+import { createWizardClient } from "react-wizzard";
 import { CodeHighlighter } from "../CodeHighlighter";
+
+const { Wizard, Step, useWizard, useWizardCommands } = createWizardClient();
 
 const StepOne = () => {
   const [open, setOpen] = useState(false);
@@ -48,9 +44,9 @@ const StepOne = () => {
           </p>
         </div>
       </Modal>
-      <Wizard.Step
+      <Step
         validate={(params) => {
-          if (params.actionType && params.actionType === "validate") {
+          if (params.payload?.actionType === "validate") {
             setOpen(true);
             return;
           }
@@ -72,10 +68,11 @@ const StepOne = () => {
         >
           🚀 Step One
         </div>
-      </Wizard.Step>
+      </Step>
     </>
   );
 };
+
 const StepTwo = () => {
   return (
     <div
@@ -127,11 +124,12 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useWizardStep();
-  return <div>{children(stepName)}</div>;
+  const { activeStep } = useWizard();
+  return <div>{children(activeStep)}</div>;
 };
+
 const WizardControls = () => {
-  const { stepName } = useWizardStep();
+  const { activeStep } = useWizard();
   const { next, previous } = useWizardCommands();
   return (
     <div
@@ -171,7 +169,7 @@ const WizardControls = () => {
       </button>
       <button
         onClick={() => {
-          if (stepName === "stepTwo") {
+          if (activeStep === "stepTwo") {
             next();
           } else {
             next({
@@ -209,7 +207,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps, stepName } = useWizardStep();
+  const { steps, activeStep } = useWizard();
   const { goToStep } = useWizardCommands();
   return (
     <div
@@ -222,13 +220,13 @@ const WizardNavigation = () => {
       }}
     >
       {steps.map((step) => {
-        const isActive = step === stepName;
+        const isActive = step === activeStep;
         return (
           <button
             onClick={() =>
               goToStep(
                 step,
-                stepName === "stepOne"
+                activeStep === "stepOne"
                   ? {
                       actionType: "validate",
                     }
@@ -276,16 +274,13 @@ const WizardNavigation = () => {
     </div>
   );
 };
+
 const Validation = () => {
   const codeExample = `import { Modal } from "antd";
 import { useState } from "react";
-import {
-  createWizardClient,
-  useWizardStep,
-  useWizardCommands,
-  WizardClientProvider,
-} from "react-wizzard";
-import { Wizard } from "react-wizzard";
+import { createWizardClient } from "react-wizzard";
+
+const { Wizard, Step, useWizard, useWizardCommands } = createWizardClient();
 
 const StepOne = () => {
   const [open, setOpen] = useState(false);
@@ -310,9 +305,9 @@ const StepOne = () => {
           <p>This step requires validation before continuing.</p>
         </div>
       </Modal>
-      <Wizard.Step
+      <Step
         validate={(params) => {
-          if (params.actionType && params.actionType === "validate") {
+          if (params.payload?.actionType === "validate") {
             setOpen(true);
             return;
           }
@@ -320,7 +315,7 @@ const StepOne = () => {
         }}
       >
         <div>Step One - Requires Validation</div>
-      </Wizard.Step>
+      </Step>
     </>
   );
 };
@@ -344,19 +339,19 @@ const BodyWrapper = ({
 }: {
   children: (stepName: string) => React.ReactNode;
 }) => {
-  const { stepName } = useWizardStep();
-  return <div>{children(stepName)}</div>;
+  const { activeStep } = useWizard();
+  return <div>{children(activeStep)}</div>;
 };
 
 const WizardControls = () => {
-  const { stepName } = useWizardStep();
+  const { activeStep } = useWizard();
   const { next, previous } = useWizardCommands();
   return (
     <div>
       <button onClick={() => previous()}>Previous</button>
       <button
         onClick={() => {
-          if (stepName === "stepTwo") {
+          if (activeStep === "stepTwo") {
             next();
           } else {
             next({
@@ -372,7 +367,7 @@ const WizardControls = () => {
 };
 
 const WizardNavigation = () => {
-  const { steps } = useWizardStep();
+  const { steps, activeStep } = useWizard();
   const { goToStep } = useWizardCommands();
   return (
     <div>
@@ -387,22 +382,20 @@ const WizardNavigation = () => {
 
 const Validation = () => {
   return (
-    <WizardClientProvider client={createWizardClient()}>
-      <Wizard
-        id="validation"
-        steps={["stepOne", "stepTwo", "stepThree"]}
-        activeStep="stepOne"
-      >
-        <WizardNavigation />
-        <BodyWrapper>
-          {(stepName) => {
-            const Step = StepMap[stepName as keyof typeof StepMap];
-            return <Step />;
-          }}
-        </BodyWrapper>
-        <WizardControls />
-      </Wizard>
-    </WizardClientProvider>
+    <Wizard
+      id="validation"
+      steps={["stepOne", "stepTwo", "stepThree"]}
+      activeStep="stepOne"
+    >
+      <WizardNavigation />
+      <BodyWrapper>
+        {(stepName) => {
+          const Step = StepMap[stepName as keyof typeof StepMap];
+          return <Step />;
+        }}
+      </BodyWrapper>
+      <WizardControls />
+    </Wizard>
   );
 };`;
 
@@ -446,22 +439,20 @@ const Validation = () => {
             border: "1px solid rgba(255, 255, 255, 0.2)",
           }}
         >
-          <WizardClientProvider client={createWizardClient()}>
-            <Wizard
-              id="validation"
-              steps={["stepOne", "stepTwo", "stepThree"]}
-              activeStep="stepOne"
-            >
-              <WizardNavigation />
-              <BodyWrapper>
-                {(stepName) => {
-                  const Step = StepMap[stepName as keyof typeof StepMap];
-                  return <Step />;
-                }}
-              </BodyWrapper>
-              <WizardControls />
-            </Wizard>
-          </WizardClientProvider>
+          <Wizard
+            id="validation"
+            steps={["stepOne", "stepTwo", "stepThree"]}
+            activeStep="stepOne"
+          >
+            <WizardNavigation />
+            <BodyWrapper>
+              {(stepName) => {
+                const Step = StepMap[stepName as keyof typeof StepMap];
+                return <Step />;
+              }}
+            </BodyWrapper>
+            <WizardControls />
+          </Wizard>
         </div>
       </div>
 
